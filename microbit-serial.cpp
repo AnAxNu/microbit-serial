@@ -6,8 +6,12 @@ MicroBitSerial::~MicroBitSerial(void){ this->end(); }
 
 const int MicroBitSerial::init(const char* serial_port_string) {
 
-  this->serial_port = open(serial_port_string, O_RDWR);
+  if((serial_port_string == NULL) || (strlen(serial_port_string) == 0) ) {
+    serial_port_string = this->SERIAL_PORT_DEFAULT_STRING;
+  }
 
+  this->serial_port = open(serial_port_string, O_RDWR);
+  
   if(this->serial_port < 1) {
     return this->ERR_SERIAL_OPEN;
   }
